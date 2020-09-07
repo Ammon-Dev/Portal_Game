@@ -1,0 +1,245 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://GameRoot.gd" type="Script" id=1]
+[ext_resource path="res://character.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://floor.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Wall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Pause.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Portals.tscn" type="PackedScene" id=8]
+[ext_resource path="res://OneSidedWall.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Window.tscn" type="PackedScene" id=10]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode unshaded;
+uniform sampler2D texture_albedo : hint_albedo;
+
+void vertex() {
+}
+
+void fragment() {
+	vec2 base_uv = SCREEN_UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo_tex.rgb;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+
+[node name="GameRoot" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="character" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -2.62992, 2.20332, -0.0192924 )
+
+[node name="Buttons" type="Spatial" parent="."]
+
+[node name="Button" parent="Buttons" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2.1904, 1.40972, 2.13843 )
+
+[node name="Button2" parent="Buttons" instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 0.867564, 1.75134, 11.2712 )
+
+[node name="Button3" parent="Buttons" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.778283, 2.53843, 13.1985 )
+
+[node name="Button4" parent="Buttons" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.778283, 0.703811, 20.919 )
+
+[node name="Button5" parent="Buttons" instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -4.70769, 2.26121, 25.897 )
+
+[node name="Portals" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1.62921e-07, -5.32907e-14, 1, -3.25841e-07, -1, 0, 1, -3.25841e-07, -1.62921e-07, 4.45983, 1.4953, 14.6173 )
+
+[node name="PortalA" parent="Portals" index="0"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31789, 0.396415, 0.272079 )
+
+[node name="MeshInstance" parent="Portals/PortalA" index="2"]
+material_override = SubResource( 2 )
+
+[node name="PortalB" parent="Portals" index="1"]
+transform = Transform( 1, -5.68434e-14, -1.42109e-14, 0, 1, -1.42108e-14, 0, 1.42109e-14, 1, 8, -1.37512, 0.188741 )
+
+[node name="MeshInstance" parent="Portals/PortalB" index="2"]
+transform = Transform( -1, 0, 3.25841e-07, 0, 1, 0, -3.25841e-07, 0, -1, 0, 0.190971, -0.05796 )
+material_override = SubResource( 3 )
+
+[node name="Portals2" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 1.40643, 0.916084, 0.191738 )
+
+[node name="PortalA" parent="Portals2" index="0"]
+transform = Transform( -5.32473e-07, 1.62921e-07, -1, -1, 1.07284e-07, 5.32473e-07, 1.07284e-07, 1, 1.62921e-07, -2.05945, 4.30752, -0.190038 )
+
+[node name="PortalB" parent="Portals2" index="1"]
+transform = Transform( -1, 4.88762e-07, 4.01339e-07, 4.01339e-07, -4.37116e-08, 1, 4.88762e-07, 1, 4.37114e-08, -0.113389, 6.12226, -0.147465 )
+
+[node name="Portals3" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 2.87802, 2.00275, 5.114 )
+
+[node name="PortalA" parent="Portals3" index="0"]
+transform = Transform( -1, 3.13916e-07, 5.76185e-07, 5.76185e-07, -4.37116e-08, 1, 3.13917e-07, 1, 4.37114e-08, -0.640343, 7.60098, 0.257604 )
+
+[node name="PortalB" parent="Portals3" index="1"]
+transform = Transform( 1, -1.6292e-07, -4.88762e-07, -4.88762e-07, -4.37113e-08, -1, 1.6292e-07, 1, -4.37114e-08, 2.80265, -1.88251, 0.267807 )
+
+[node name="Portals4" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 2.87802, 2.0279, 9.02117 )
+
+[node name="PortalA" parent="Portals4" index="0"]
+transform = Transform( -1, 3.13916e-07, 5.76185e-07, 5.76185e-07, -4.37116e-08, 1, 3.13917e-07, 1, 4.37114e-08, 0.486292, 7.6426, 0.317473 )
+
+[node name="PortalB" parent="Portals4" index="1"]
+transform = Transform( 1, -1.6292e-07, -4.88762e-07, -4.88762e-07, -4.37113e-08, -1, 1.6292e-07, 1, -4.37114e-08, -4.55733, -1.8825, 0.294554 )
+
+[node name="Portals5" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 2.87802, 1.36131, 37.4678 )
+
+[node name="PortalA" parent="Portals5" index="0"]
+transform = Transform( -1, 3.13916e-07, 5.76185e-07, 5.76185e-07, -4.37116e-08, 1, 3.13917e-07, 1, 4.37114e-08, 0.486292, 7.6426, 0.317473 )
+
+[node name="PortalB" parent="Portals5" index="1"]
+transform = Transform( 1, -1.6292e-07, -4.88762e-07, -4.88762e-07, -4.37113e-08, -1, 1.6292e-07, 1, -4.37114e-08, 3.44268, -1.88251, 0.294553 )
+
+[node name="Portals6" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 2.87802, 1.33617, 34.4162 )
+
+[node name="PortalA" parent="Portals6" index="0"]
+transform = Transform( -1, 3.13916e-07, 5.76185e-07, 5.76185e-07, -4.37116e-08, 1, 3.13917e-07, 1, 4.37114e-08, -0.640343, 7.60098, 0.257604 )
+
+[node name="PortalB" parent="Portals6" index="1"]
+transform = Transform( 1, -1.6292e-07, -4.88762e-07, -4.88762e-07, -4.37113e-08, -1, 1.6292e-07, 1, -4.37114e-08, 2.80265, -1.88251, 0.267807 )
+
+[node name="Portals8" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 2.87802, 1.36131, 45.4678 )
+
+[node name="PortalA" parent="Portals8" index="0"]
+transform = Transform( -1, 3.13916e-07, 5.76185e-07, 5.76185e-07, -4.37116e-08, 1, 3.13917e-07, 1, 4.37114e-08, 0.486292, 7.6426, 0.317473 )
+
+[node name="PortalB" parent="Portals8" index="1"]
+transform = Transform( 1, -1.6292e-07, -4.88762e-07, -4.88762e-07, -4.37113e-08, -1, 1.6292e-07, 1, -4.37114e-08, -12.5573, -1.8825, 0.294555 )
+
+[node name="Portals7" parent="." instance=ExtResource( 8 )]
+transform = Transform( -3.25841e-07, -1, -4.37114e-08, -1.62921e-07, 4.37114e-08, -1, 1, -3.25841e-07, -1.62921e-07, 2.87802, 1.33617, 42.4162 )
+
+[node name="PortalA" parent="Portals7" index="0"]
+transform = Transform( -1, 3.13916e-07, 5.76185e-07, 5.76185e-07, -4.37116e-08, 1, 3.13917e-07, 1, 4.37114e-08, -0.640343, 7.60098, 0.257604 )
+
+[node name="PortalB" parent="Portals7" index="1"]
+transform = Transform( 1, -1.6292e-07, -4.88762e-07, -4.88762e-07, -4.37113e-08, -1, 1.6292e-07, 1, -4.37114e-08, 2.80265, -1.88251, 0.267807 )
+
+[node name="OuterWalls" type="Spatial" parent="."]
+
+[node name="OneSidedWall" parent="OuterWalls" instance=ExtResource( 9 )]
+transform = Transform( -1.62921e-06, 0, -1, 0, 4, 0, 50, 0, -8.14605e-07, 5, 2, 22.8353 )
+
+[node name="OneSidedWall3" parent="OuterWalls" instance=ExtResource( 9 )]
+transform = Transform( 10, 0, 4.45084e-10, 0, 4, 0, -1.11271e-07, 0, 1, 0, 2, -2.1647 )
+
+[node name="OneSidedWall4" parent="OuterWalls" instance=ExtResource( 9 )]
+transform = Transform( -10, 0, -8.78679e-08, 0, 4, 0, 9.855e-07, 0, -1, 0, 2, 47.8353 )
+
+[node name="OneSidedWall2" parent="OuterWalls" instance=ExtResource( 9 )]
+transform = Transform( -2.74193e-06, 0, 1, 0, 4, 0, -50, 0, 7.2718e-07, -5, 2, 22.8353 )
+
+[node name="floor" type="Spatial" parent="OuterWalls"]
+
+[node name="OneSidedWall2" parent="OuterWalls/floor" instance=ExtResource( 9 )]
+transform = Transform( 10, 0, 0, 0, -2.27299e-06, 1, 0, -52, -4.37114e-08, 0, 0, 23 )
+
+[node name="floor2" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.497, 7.7 )
+
+[node name="Window" parent="floor2" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13108, 0, 0 )
+
+[node name="Window2" parent="floor2" instance=ExtResource( 10 )]
+transform = Transform( -4.37114e-08, 0, -0.4, 0, 1, 0, 1, 0, -1.74846e-08, 3.13108, 0, 5.22702 )
+
+[node name="Wall2-1" parent="floor2" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -2.372, -5.252 )
+
+[node name="Wall2-2" parent="floor2" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.003, -2.373, 5.249 )
+
+[node name="Wall2-3" parent="floor2" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 0.8, 0, 1, 0, -1, 0, -3.49691e-08, 0.999752, 0, -5.252 )
+
+[node name="Wall2-4" parent="floor2" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 0.8, 0, 1, 0, -1, 0, -3.49691e-08, -1.67769, 0, -1.30667 )
+
+[node name="Wall2-6" parent="floor2" instance=ExtResource( 5 )]
+transform = Transform( -4.37114e-08, 0, 0.3, 0, 1, 0, -1, 0, -1.31134e-08, -0.132689, 0, 1.82688 )
+
+[node name="Wall2-8" parent="floor2" instance=ExtResource( 5 )]
+transform = Transform( 0, 0, 0.42, 0, 1, 0, -1, 0, 0, -0.721307, 0, 5.249 )
+
+[node name="floor3" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 25.7 )
+
+[node name="Window3" parent="floor3" instance=ExtResource( 10 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.0154686, -2.37982, -5.20355 )
+
+[node name="HUD" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="HUD"]
+margin_left = 1.0
+margin_top = 533.0
+margin_right = 162.0
+margin_bottom = 599.0
+
+[node name="Goal" type="Label" parent="HUD/Panel"]
+margin_left = 7.0
+margin_top = 12.0
+margin_right = 148.0
+margin_bottom = 54.0
+text = "Buttons hit: 5/5"
+
+[node name="Panel2" type="Panel" parent="HUD"]
+margin_left = 510.0
+margin_top = 310.0
+margin_right = 515.0
+margin_bottom = 315.0
+rect_scale = Vector2( 0.812994, 0.830974 )
+
+[node name="Pause" parent="." instance=ExtResource( 7 )]
+margin_left = 425.0
+margin_top = 273.0
+margin_right = 561.0
+margin_bottom = 381.0
+[connection signal="hit" from="Buttons/Button" to="." method="_on_Button_hit"]
+[connection signal="hit" from="Buttons/Button2" to="." method="_on_Button_hit"]
+[connection signal="hit" from="Buttons/Button3" to="." method="_on_Button_hit"]
+[connection signal="hit" from="Buttons/Button4" to="." method="_on_Button_hit"]
+[connection signal="hit" from="Buttons/Button5" to="." method="_on_Button_hit"]
+
+[editable path="Portals"]
+
+[editable path="Portals/PortalA"]
+
+[editable path="Portals/PortalB"]
+
+[editable path="Portals2"]
+
+[editable path="Portals3"]
+
+[editable path="Portals4"]
+
+[editable path="Portals5"]
+
+[editable path="Portals6"]
+
+[editable path="Portals8"]
+
+[editable path="Portals7"]
